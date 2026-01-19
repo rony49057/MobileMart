@@ -2,9 +2,15 @@
 require_once __DIR__ . '/DB.php';
 require_once __DIR__ . '/Product.php';
 
-class Order {
+class Order
+{
+    public static function createFromCart($paymentMethod)
+    {
+        $userPhone = $_SESSION['user']['phone'] ?? '';
+        if ($userPhone === '') {
+            return ['ok' => false, 'msg' => 'Please login first'];
+        }
 
-    public static function createFromCart($userPhone, $paymentMethod) {
         $pdo = DB::conn();
         $sid = $_COOKIE['mm_cart_sid'] ?? '';
         if ($sid === '') return ['ok'=>false,'msg'=>'Cart session missing'];
@@ -64,21 +70,27 @@ class Order {
         }
     }
 
-    public static function byUser($phone) {
+    public static function byUser($phone)
+    {
         $pdo = DB::conn();
         $st = $pdo->prepare('SELECT * FROM orders WHERE user_phone=? ORDER BY id DESC');
         $st->execute([$phone]);
         return $st->fetchAll();
     }
 
-    public static function items($orderId) {
+    public static function items($orderId)
+    {
         $pdo = DB::conn();
-        $st = $pdo->prepare('SELECT oi.*, p.model, p.brand, p.image FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=?');
+        $st = $pdo->prepare('SELECT oi.*, p.model, p.brand, p.image
+                             FROM order_items oi
+                             JOIN products p ON p.id=oi.product_id
+                             WHERE oi.order_id=?');
         $st->execute([$orderId]);
         return $st->fetchAll();
     }
 
-    public static function all($q='') {
+    public static function all($q='')
+    {
         $pdo = DB::conn();
 
         $base = "SELECT
@@ -98,21 +110,20 @@ class Order {
         }
 
         $like = '%' . $q . '%';
-
-        $st = $pdo->prepare(
-            $base . " WHERE CAST(o.id AS CHAR) LIKE ? OR o.user_phone LIKE ? OR cu.name LIKE ? ORDER BY o.id DESC"
-        );
+        $st = $pdo->prepare($base . " WHERE CAST(o.id AS CHAR) LIKE ? OR o.user_phone LIKE ? OR cu.name LIKE ? ORDER BY o.id DESC");
         $st->execute([$like, $like, $like]);
         return $st->fetchAll();
     }
 
-    public static function assignStaff($orderId, $staffPhone) {
+    public static function assignStaff($orderId, $staffPhone)
+    {
         $pdo = DB::conn();
         $st = $pdo->prepare('UPDATE orders SET assigned_staff_phone=? WHERE id=?');
         return $st->execute([$staffPhone, $orderId]);
     }
 
-    public static function updateStatus($orderId, $status) {
+    public static function updateStatus($orderId, $status)
+    {
         $pdo = DB::conn();
 
         $st = $pdo->prepare('SELECT status FROM orders WHERE id=?');
@@ -133,24 +144,29 @@ class Order {
         return ['ok'=>true,'msg'=>'Status updated'];
     }
 
-    public static function staffOrders($staffPhone, $q='') {
+    public static function staffOrders($staffPhone, $q='')
+    {
         $pdo = DB::conn();
         $q = trim($q);
 
+        $base = "SELECT o.*, cu.name AS user_name, cu.address AS user_address
+                 FROM orders o
+                 LEFT JOIN users cu ON cu.phone = o.user_phone";
+
         if ($q === '') {
-            $st = $pdo->prepare('SELECT * FROM orders WHERE assigned_staff_phone=? ORDER BY id DESC');
+            $st = $pdo->prepare($base . ' WHERE o.assigned_staff_phone=? ORDER BY o.id DESC');
             $st->execute([$staffPhone]);
             return $st->fetchAll();
         }
 
         $like = '%' . $q . '%';
-
-        $st = $pdo->prepare('SELECT * FROM orders WHERE assigned_staff_phone=? AND (CAST(id AS CHAR) LIKE ? OR user_phone LIKE ?) ORDER BY id DESC');
-        $st->execute([$staffPhone, $like, $like]);
+        $st = $pdo->prepare($base . ' WHERE o.assigned_staff_phone=? AND (CAST(o.id AS CHAR) LIKE ? OR o.user_phone LIKE ? OR cu.name LIKE ?) ORDER BY o.id DESC');
+        $st->execute([$staffPhone, $like, $like, $like]);
         return $st->fetchAll();
     }
 
-    public static function totalSell() {
+    public static function totalSell()
+    {
         $pdo = DB::conn();
         $st = $pdo->prepare('SELECT COALESCE(SUM(total),0) as t FROM orders WHERE status=?');
         $st->execute(['Delivered']);
