@@ -5,7 +5,6 @@ require_once __DIR__ . '/../model/Cart.php';
 require_once __DIR__ . '/../model/Order.php';
 
 class AjaxController {
-
     private static function json($arr) {
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($arr);
