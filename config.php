@@ -1,40 +1,32 @@
 <?php
 
-
-define('DB_HOST', '127.0.0.1');   
-define('DB_PORT', '3306');        
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3306');
 define('DB_NAME', 'mobile_mart_db');
 define('DB_USER', 'root');
-define('DB_PASS', '');           
+define('DB_PASS', '');
 
 
-define('BASE_URL', '/MobileMart');
-
+$base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+define('BASE_URL', $base === '' ? '' : $base);
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-
 
 if (session_status() === PHP_SESSION_NONE) {
     session_name('MMSESSID');
     session_start();
 }
 
-
 if (!isset($_COOKIE['mm_cart_sid']) || $_COOKIE['mm_cart_sid'] === '') {
-
- 
     try {
         $sid = bin2hex(random_bytes(8));
     } catch (Exception $e) {
         $sid = bin2hex(openssl_random_pseudo_bytes(8));
     }
-
-
     setcookie('mm_cart_sid', $sid, time() + (30 * 24 * 3600), '/');
     $_COOKIE['mm_cart_sid'] = $sid;
 }
-
 
 function base_url($path = '') {
     if ($path === '') return BASE_URL;
