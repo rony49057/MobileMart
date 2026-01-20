@@ -84,12 +84,16 @@ $displayName = trim($u['name'] ?? '');
     <button class="btn" type="submit">Search</button>
   </form>
 </div>
-<?php endif; ?>
+<?php endif; 
+?>
 
 <div class="container">
   <?php if ($msg = get_flash('error')): ?>
     <div class="alert error"><?= e($msg) ?></div>
   <?php endif; ?>
-  <?php if ($msg = get_flash('success')): ?>
-    <div class="alert success"><?= e($msg) ?></div>
-  <?php endif; ?>
+  <?php if ($msg = get_flash('success')): 
+  ?>
+    <div class="alert success"><?= e($msg) 
+	?></div>
+  <?php endif; 
+  ?>
