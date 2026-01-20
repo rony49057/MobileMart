@@ -15,8 +15,10 @@ include __DIR__ . '/header.php';
   <?php if (!$products): ?>
     <p>No products found.</p>
   <?php else: ?>
-    <?php include __DIR__ . '/product_grid.php'; ?>
+    <?php include __DIR__ . '/product_grid.php'; 
+	?>
   <?php endif; ?>
 </div>
 
-<?php include __DIR__ . '/footer.php'; ?>
+<?php include __DIR__ . '/footer.php'; 
+?>
