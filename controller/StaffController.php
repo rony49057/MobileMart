@@ -6,7 +6,8 @@ require_once __DIR__ . '/../model/User.php';
 require_once __DIR__ . '/../model/StaffSalary.php';
 
 class StaffController {
-    public static function dashboard() {
+    public static function dashboard() 
+	{
         require_login();
         require_role('staff');
 
