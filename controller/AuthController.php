@@ -4,7 +4,8 @@ require_once __DIR__ . '/../model/User.php';
 require_once __DIR__ . '/../model/Cart.php';
 
 class AuthController {
-    public static function login() {
+    public static function login() 
+	{
         if (is_post()) {
             $phone = trim($_POST['phone'] ?? '');
             $pass  = $_POST['password'] ?? '';
@@ -36,7 +37,8 @@ class AuthController {
         include __DIR__ . '/../view/login.php';
     }
 
-    public static function logout() {
+    public static function logout() 
+	{
         $_SESSION = [];
         session_destroy();
         setcookie('MMSESSID', '', time() - 3600, '/');
