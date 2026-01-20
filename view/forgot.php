@@ -1,4 +1,5 @@
-<?php $title='Forgot Password'; include __DIR__ . '/header.php'; ?>
+<?php $title='Forgot Password'; include __DIR__ . '/header.php'; 
+?>
 
 <div class="auth-card">
   <h2>Forgot Password</h2>
@@ -20,4 +21,5 @@
   </div>
 </div>
 
-<?php include __DIR__ . '/footer.php'; ?>
+<?php include __DIR__ . '/footer.php'; 
+?>
