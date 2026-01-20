@@ -16,11 +16,11 @@
       <?php endforeach; ?>
     </select>
 
-    <label>Month (e.g. 2026-01)</label>
-    <input type="text" name="month" id="sal_month" placeholder="YYYY-MM">
+    <label>Month (e.g. 01-2026)</label>
+    <input type="text" name="month" id="sal_month" placeholder="MM-YYYY">
 
     <label>Amount</label>
-    <input type="text" name="amount" id="sal_amount" placeholder="5000">
+    <input type="text" name="amount" id="sal_amount" placeholder="amount">
 
     <label>Note</label>
     <input type="text" name="note" placeholder="Optional">
@@ -41,7 +41,7 @@
         <div>Month</div>
         <div>Amount</div>
         <div>Note</div>
-        <div>Action</div>
+        
       </div>
 
       <?php foreach ($history as $h): ?>
@@ -50,7 +50,7 @@
           <div><?= e($h['month'] ?? '') ?></div>
           <div>৳<?= e($h['amount'] ?? 0) ?></div>
           <div><?= e($h['note'] ?? '') ?></div>
-          <div>-</div>
+       
         </div>
       <?php endforeach; ?>
     </div>
