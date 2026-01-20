@@ -3,11 +3,16 @@ require_once __DIR__ . '/DB.php';
 
 class StaffSalary
 {
-    public static function add($staffPhone, $amount, $month, $note = '')
+    public static function pay($staffPhone, $amount, $month, $note = '')
     {
         $pdo = DB::conn();
         $st = $pdo->prepare("INSERT INTO staff_salary(staff_phone, amount, month, note, created_at) VALUES(?,?,?,?,NOW())");
         return $st->execute([$staffPhone, $amount, $month, $note]);
+    }
+
+    public static function add($staffPhone, $amount, $month, $note = '')
+    {
+        return self::pay($staffPhone, $amount, $month, $note);
     }
 
     public static function byStaff($staffPhone)
