@@ -15,7 +15,7 @@ $role = $u['role'] ?? 'guest';
         <div class="meta">RAM: <?= e($p['ram']) ?> | ROM: <?= e($p['rom']) ?></div>
         <div class="meta">Stock: <?= (int)$p['qty'] ?></div>
         <div class="price">
-          ৳<?= e($p['price']) ?>
+          <?= e($p['price']) ?> Tk.
           <?php if ((int)$p['offer_percent'] > 0): ?>
             <span class="badge"><?= (int)$p['offer_percent'] ?>% OFF</span>
           <?php endif; ?>

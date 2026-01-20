@@ -17,7 +17,7 @@ $role = $u['role'] ?? 'guest';
     <h2><?= e($product['model']) ?></h2>
     <p><b>Brand:</b> <?= e($product['brand']) ?></p>
     <p><b>RAM:</b> <?= e($product['ram']) ?> | <b>ROM:</b> <?= e($product['rom']) ?></p>
-    <p><b>Price:</b> ৳<?= e($product['price']) ?> <?php if ((int)$product['offer_percent']>0): ?><span class="badge"><?= (int)$product['offer_percent'] ?>% OFF</span><?php endif; ?></p>
+    <p><b>Price:</b> <?= e($product['price']) ?> Tk. <?php if ((int)$product['offer_percent']>0): ?><span class="badge"><?= (int)$product['offer_percent'] ?>% OFF</span><?php endif; ?></p>
     <p><b>Stock:</b> <?= (int)$product['qty'] ?></p>
 
     <?php if ($role === 'customer' || $role === 'guest'): ?>

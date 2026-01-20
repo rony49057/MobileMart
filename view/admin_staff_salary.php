@@ -37,7 +37,7 @@
   <?php else: ?>
     <div class="table">
       <div class="tr head">
-        <div>Staff</div>
+        <div>Staff Name</div>
         <div>Month</div>
         <div>Amount</div>
         <div>Note</div>
@@ -48,7 +48,7 @@
         <div class="tr">
           <div><?= e($h['staff_name'] ?? '') ?> (<?= e($h['staff_phone'] ?? '') ?>)</div>
           <div><?= e($h['month'] ?? '') ?></div>
-          <div>৳<?= e($h['amount'] ?? 0) ?></div>
+          <div>  <?= e($h['amount'] ?? 0) ?> Tk.</div>
           <div><?= e($h['note'] ?? '') ?></div>
        
         </div>
