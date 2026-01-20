@@ -6,7 +6,6 @@ define('DB_NAME', 'mobile_mart_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
-
 $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
 define('BASE_URL', $base === '' ? '' : $base);
 
